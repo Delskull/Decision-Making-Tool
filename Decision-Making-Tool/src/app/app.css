@@ -1,0 +1,9 @@
+body {
+  background-color: #008c8c;
+  color: #e6f4f4;
+  display: flex;
+  flex-direction: column;
+  font-family: Inter, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  justify-content: center;
+  min-height: 100dvh;
+}

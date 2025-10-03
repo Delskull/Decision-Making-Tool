@@ -1,4 +1,5 @@
 import MainView from '@/app/view/main/main-view.ts';
+import './app.css';
 
 export default class App {
   constructor() {
