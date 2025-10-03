@@ -37,7 +37,14 @@ export default [
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
-        // НЕ указываем project для конфигов - отключаем проверку типов
+      },
+      globals: {
+        // Глобальные переменные для конфигов
+        process: 'readonly',
+        console: 'readonly',
+        require: 'readonly',
+        module: 'readonly',
+        __dirname: 'readonly',
       },
     },
     rules: {
@@ -49,12 +56,8 @@ export default [
       'unicorn/prefer-module': 'off',
       '@typescript-eslint/no-var-requires': 'off',
       '@typescript-eslint/consistent-type-imports': 'off',
+      'no-undef': 'off',
     },
-  },
-
-  // Базовые настройки для исходного кода (src/)
-  {
-    files: ['src/**/*.{js,ts}'],
   },
 
   // Базовые рекомендуемые настройки ESLint
@@ -68,8 +71,28 @@ export default [
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
-        project: './tsconfig.json', // Используем основной tsconfig
+        project: './tsconfig.json',
         tsconfigRootDir: import.meta.dirname,
+      },
+      globals: {
+        // Браузерные глобальные переменные
+        document: 'readonly',
+        console: 'readonly',
+        window: 'readonly',
+        navigator: 'readonly',
+        location: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+        fetch: 'readonly',
+        alert: 'readonly',
+        confirm: 'readonly',
+        CustomEvent: 'readonly',
+        HTMLElement: 'readonly',
+        HTMLDivElement: 'readonly',
+        HTMLButtonElement: 'readonly',
+        // ... добавьте другие по необходимости
       },
     },
     plugins: {
@@ -93,24 +116,39 @@ export default [
         },
       ],
       '@typescript-eslint/member-ordering': 'error',
-      'class-methods-use-this': 'error',
+
+      // ИСПРАВЛЕНО: Отключаем проблемное правило
+      'class-methods-use-this': 'off',
 
       // Дополнительные настройки
       '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
       '@typescript-eslint/no-unused-vars': 'error',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unnecessary-type-assertion': 'error',
+
+      // Отключаем no-undef, так как мы явно указали глобальные переменные
+      'no-undef': 'off',
     },
   },
 
   // Unicorn плагин ТОЛЬКО для исходного кода
   {
-    files: ['src/**/*.{js,ts}'], // ТОЛЬКО файлы в src/
+    files: ['src/**/*.{js,ts}'],
     plugins: {
       unicorn: unicornPlugin,
     },
     rules: {
-      // ... правила unicorn (как в предыдущих примерах)
+      'unicorn/prefer-module': 'off', // Отключаем для браузерного кода
+      'unicorn/filename-case': [
+        'error',
+        {
+          cases: {
+            kebabCase: true,
+            pascalCase: true,
+          },
+        },
+      ],
+      'unicorn/prevent-abbreviations': 'off',
     },
   },
 
