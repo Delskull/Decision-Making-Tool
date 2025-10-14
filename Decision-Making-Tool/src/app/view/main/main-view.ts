@@ -9,6 +9,9 @@ type CssClasses = {
 const cssClasses: CssClasses = {
   MAIN: 'main',
 };
+const text = {
+    TEXT: 'Decision Making Tool'
+}
 
 export default class MainView {
   private elementCreator: ElementCreator;

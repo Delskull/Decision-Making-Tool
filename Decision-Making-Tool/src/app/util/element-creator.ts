@@ -1,20 +1,30 @@
 import type { ElementParams } from '@/app/types/ElementParams';
 
 export default class ElementCreator {
-  public element: HTMLElement | null;
+  public element: HTMLElement;
 
   constructor(param: ElementParams) {
-    this.element = null;
-    this.createElement(param);
+   this.element = this.createElement(param);
+   this.setCssClasses(param.classNames)
   }
 
-  public getElement(): HTMLElement | null {
+  public getElement(): HTMLElement{
     return this.element;
   }
 
-  private createElement(param: ElementParams): void {
-    this.element = document.createElement(param.tag);
-    this.setCssClasses(param.classNames);
+  public addInnerElement ( element: HTMLElement | ElementCreator) : this {
+    if (element instanceof ElementCreator) {
+        this.element?.appendChild(element.getElement())
+    }
+    else {
+        this.element.appendChild(element);
+    }
+    return this
+  }
+
+  private createElement(param: ElementParams): HTMLElement {
+    return document.createElement(param.tag);
+
   }
 
   private setCssClasses(cssClasses: string[] | undefined): void {
@@ -22,4 +32,6 @@ export default class ElementCreator {
       cssClasses.forEach(className => this.element?.classList.add(className));
     }
   }
+
+
 }

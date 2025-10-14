@@ -1,5 +1,5 @@
 export type ElementParams = {
-  tag: string;
+  tag: keyof HTMLElementTagNameMap;
   classNames?: string[];
   textContent?: string;
   callback?: Function;
